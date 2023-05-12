@@ -1,5 +1,6 @@
 package kg.mega.rentcars_kg.service.impl;
 
+import kg.mega.rentcars_kg.model.OrderDetail;
 import kg.mega.rentcars_kg.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -19,5 +20,13 @@ public class MailSenderServiceImpl implements MailSenderService {
         message.setText(text);
         emailSender.send(message);
 
+    }
+
+    @Override
+    public void sendOrderMessage(OrderDetail orderDetail) {
+        String message = "Вы забронировали "+orderDetail.getCar().getCarModel()+" на "+orderDetail.getOrderedDays() +" дней "+
+                ". Итоговая сумма: "+orderDetail.getPriceWithDiscount();
+        String subject = "Order details";
+        sendSimpleMessage(orderDetail.getClientEmail(),subject,message);
     }
 }

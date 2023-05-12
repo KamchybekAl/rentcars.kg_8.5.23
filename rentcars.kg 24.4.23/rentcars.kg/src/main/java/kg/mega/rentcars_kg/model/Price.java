@@ -22,6 +22,6 @@ public class Price {
     private Double price;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Car car;
 }
