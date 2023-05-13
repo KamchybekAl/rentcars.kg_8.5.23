@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.Duration;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -43,20 +44,22 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         mailSenderService.sendOrderMessage(orderDetail);
         return orderDetailMapper.toDto(save);
     }
-    private Double calculatePriceWithDiscount(OrderDetail orderDetail, Double priceWithoutDiscount){
-        Discount discount = discountService.getActualDiscountByCarAndDaysCount(orderDetail.getCar(),findReservedDays(orderDetail));
-//        Discount discount = discountService.getActualDiscountByCarAndDaysCount(carService.findById(orderDetail.getCar().getId()),findReservedDays(orderDetail));
 
-        return priceWithoutDiscount-(priceWithoutDiscount*(discount.getDiscount()/100));
+    private Double calculatePriceWithDiscount(OrderDetail orderDetail, Double priceWithoutDiscount) {
+        Discount discount = discountService.getActualDiscountByCarAndDaysCount(orderDetail.getCar(), findReservedDays(orderDetail));
+        if (findReservedDays(orderDetail) != null && findReservedDays(orderDetail) > 2) { // отправляет: Итоговая сумма с учётом Вашей скидки: null  ??
+            return priceWithoutDiscount - (priceWithoutDiscount * (discount.getDiscount() / 100));
+        } else {
+            return 0.0;
+        }
     }
-    private Double calculatePriceWithoutDiscount(OrderDetail orderDetail){
+
+    private Double calculatePriceWithoutDiscount(OrderDetail orderDetail) {
         Price carPricePerDay = priceService.activePriceByCar(orderDetail.getCar());
 //        Price carPricePerDay = priceService.activePriceByCar(carService.findById(orderDetail.getCar().getId()));
         Long daysCont = findReservedDays(orderDetail);
-        return carPricePerDay.getPrice()*daysCont;
+        return carPricePerDay.getPrice() * daysCont;
     }
-
-
 
     @Override
     public OrderDetailDTO findById(Long id) {
@@ -67,6 +70,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<OrderDetailDTO> findAll() {
         return orderDetailMapper.toDTOList(orderDetailRepo.findAll());
     }
+
     @Override
     public OrderDetailDTO updateOrderDetail(OrderDetailDTO orderDetailDTO) {
         OrderDetail updateOrderDetail = orderDetailRepo.findById(orderDetailDTO.getId()).get();
@@ -76,7 +80,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private Long findReservedDays(OrderDetail orderDetail) {
         Duration duration = Duration.between(orderDetail.getDateTimeFrom(), orderDetail.getDateTimeTo());
-        return Math.abs(duration.toDays())+1;
+        return Math.abs(duration.toDays()) + 1;
     }
 
 }

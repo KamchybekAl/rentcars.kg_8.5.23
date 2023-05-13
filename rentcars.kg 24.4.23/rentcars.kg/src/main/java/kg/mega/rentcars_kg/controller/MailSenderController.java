@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailSenderController {
     private final MailSenderService mailSenderService;
 
-    @PostMapping("/sendMail")
-    public void sendMail(@RequestParam String to, @RequestParam String subject, @RequestParam String text){
-        mailSenderService.sendSimpleMessage(to,subject,text);
-    }
+//    @PostMapping("/sendMail")
+//    public void sendMail(@RequestParam String to, @RequestParam String subject, @RequestParam String text){
+//        mailSenderService.sendSimpleMessage(to,subject,text);
+//    }
 
 }
