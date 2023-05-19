@@ -1,5 +1,6 @@
 package kg.mega.rentcars_kg.controller;
 
+import kg.mega.rentcars_kg.model.dto.OrderCarDTO;
 import kg.mega.rentcars_kg.model.dto.OrderDetailDTO;
 import kg.mega.rentcars_kg.service.OrderDetailService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,9 @@ public class OrderDetailController {
     @PostMapping("/update")
     public OrderDetailDTO updateOrderDetail (@RequestBody OrderDetailDTO orderDetailDTO){
         return orderDetailService.updateOrderDetail(orderDetailDTO);
+    }
+    @GetMapping("/findAllActive")
+    public List<OrderCarDTO>findAllActive(){
+        return orderDetailService.findAllActive();
     }
 }

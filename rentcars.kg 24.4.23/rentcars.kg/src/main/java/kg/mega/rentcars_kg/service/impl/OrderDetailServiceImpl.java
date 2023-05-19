@@ -1,11 +1,11 @@
 package kg.mega.rentcars_kg.service.impl;
 
 import kg.mega.rentcars_kg.mapper.AddressMapper;
-import kg.mega.rentcars_kg.mapper.CarMapper;
 import kg.mega.rentcars_kg.mapper.OrderDetailMapper;
 import kg.mega.rentcars_kg.model.Discount;
 import kg.mega.rentcars_kg.model.OrderDetail;
 import kg.mega.rentcars_kg.model.Price;
+import kg.mega.rentcars_kg.model.dto.OrderCarDTO;
 import kg.mega.rentcars_kg.model.dto.OrderDetailDTO;
 import kg.mega.rentcars_kg.repository.OrderDetailRepo;
 import kg.mega.rentcars_kg.service.*;
@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +30,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private final AddressService addressService;
     private final AddressMapper addressMapper;
     private final CarService carService;
-    private final CarMapper carMapper;
     private final MailSenderService mailSenderService;
 
     @Override
@@ -37,7 +39,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetail.setCar(carService.findById(orderDetail.getCar().getId()));
         orderDetail.setOrderedDays(findReservedDays(orderDetail));
         orderDetail.setPriceBeforeDiscount(calculatePriceWithoutDiscount(orderDetail));
-        orderDetail.setPriceWithDiscount(calculatePriceWithDiscount(orderDetail,calculatePriceWithoutDiscount(orderDetail)));
+        orderDetail.setPriceWithDiscount(calculatePriceWithDiscount(orderDetail, calculatePriceWithoutDiscount(orderDetail)));
         orderDetail.setGetAddress(addressMapper.toEntity(addressService.findById(orderDetailDTO.getGetAddress().getId())));
         orderDetail.setReturnAddress(addressMapper.toEntity(addressService.findById(orderDetailDTO.getReturnAddress().getId())));
         OrderDetail save = orderDetailRepo.save(orderDetail);
@@ -56,7 +58,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private Double calculatePriceWithoutDiscount(OrderDetail orderDetail) {
         Price carPricePerDay = priceService.activePriceByCar(orderDetail.getCar());
-//        Price carPricePerDay = priceService.activePriceByCar(carService.findById(orderDetail.getCar().getId()));
         Long daysCont = findReservedDays(orderDetail);
         return carPricePerDay.getPrice() * daysCont;
     }
@@ -68,6 +69,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public List<OrderDetailDTO> findAll() {
+
         return orderDetailMapper.toDTOList(orderDetailRepo.findAll());
     }
 
@@ -78,9 +80,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return orderDetailMapper.toDto(updateOrderDetail);
     }
 
-    private Long findReservedDays(OrderDetail orderDetail) {
-        Duration duration = Duration.between(orderDetail.getDateTimeFrom(), orderDetail.getDateTimeTo());
-        return Math.abs(duration.toDays()) + 1;
+    @Override
+    public List<OrderCarDTO> findAllActive() {
+//        OrderCarDTO orderCarDTO = new OrderCarDTO();
+        List<OrderCarDTO>toArryList = new ArrayList<>();
+        for (OrderDetail or:orderDetailRepo.findAllActive(LocalDateTime.now())) {
+            toArryList.add(new OrderCarDTO(or.getDateTimeFrom().toLocalDate().datesUntil(or.getDateTimeTo().toLocalDate()).collect(Collectors.toList()),or.getCar()));
+        }
+        return toArryList;
     }
 
+    private Long findReservedDays(OrderDetail orderDetail) {
+        Duration duration = Duration.between(orderDetail.getDateTimeFrom(), orderDetail.getDateTimeTo());
+        return duration.toDays() + 1;
+    }
 }

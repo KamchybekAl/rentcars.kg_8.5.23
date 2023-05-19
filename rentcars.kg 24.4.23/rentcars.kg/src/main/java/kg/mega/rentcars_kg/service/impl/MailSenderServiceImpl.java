@@ -4,7 +4,6 @@ import kg.mega.rentcars_kg.model.OrderDetail;
 import kg.mega.rentcars_kg.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,18 +15,10 @@ import java.io.File;
 @RequiredArgsConstructor
 public class MailSenderServiceImpl implements MailSenderService {
     private final JavaMailSender emailSender;
-//    @Override
-//    public void sendSimpleMessage(String to, String subject, String text) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setFrom("noreply@baeldung.com"); // можем не указывать, т.к будет идти с нашего аккаунта
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(text);
-//        emailSender.send(message);
-//    }
+
 
     @Override
-    public void sendSimpleMessage(String to, String subject, String text,String filePath) {
+    public void sendSimpleMessage(String to, String subject, String text, String filePath) {
         MimeMessage message = emailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -37,14 +28,12 @@ public class MailSenderServiceImpl implements MailSenderService {
             helper.setText(text);
             FileSystemResource file
                     = new FileSystemResource(new File(filePath));
-            helper.addAttachment("Invoice.jpg", file);
-
+            helper.addAttachment("CarPhoto.jpg", file);
             emailSender.send(message);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void sendOrderMessage(OrderDetail orderDetail) {
@@ -56,6 +45,6 @@ public class MailSenderServiceImpl implements MailSenderService {
                 "\n планируемое время аренды машины:  " + orderDetail.getOrderedDays() + " дней " +
                 "\n начисленная сумма за авренду авто: " + orderDetail.getPriceBeforeDiscount() + messageDiscount;
         String subject = "Ваш заказ по аренде автомибиля";
-        sendSimpleMessage(orderDetail.getClientEmail(), subject, message,orderDetail.getCar().getPhoto());
+        sendSimpleMessage(orderDetail.getClientEmail(), subject, message, orderDetail.getCar().getPhoto());
     }
 }
