@@ -12,24 +12,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DiscountController {
     private final DiscountService discountService;
-    @PostMapping("/save")
-    public DiscountDTO saveDiscount(@RequestBody DiscountDTO discountDTO){
-        return discountService.saveDiscount(discountDTO);
 
+    @PostMapping("/save")
+    public DiscountDTO saveDiscount(@RequestBody DiscountDTO discountDTO) {
+        return discountService.saveDiscount(discountDTO);
     }
 
     @GetMapping("/findById")
-    public DiscountDTO findById (@RequestParam Long id){
+    public DiscountDTO findById(@RequestParam Long id) {
         return discountService.findById(id);
     }
 
     @GetMapping("/findAll")
-    public List<DiscountDTO> findAll(){
+    public List<DiscountDTO> findAll() {
         return discountService.findAll();
     }
 
     @PutMapping("/update")
-    public DiscountDTO updateDiscount(@RequestBody DiscountDTO discountDTO){
+    public DiscountDTO updateDiscount(@RequestBody DiscountDTO discountDTO) {
         return discountService.updateDiscount(discountDTO);
     }
 

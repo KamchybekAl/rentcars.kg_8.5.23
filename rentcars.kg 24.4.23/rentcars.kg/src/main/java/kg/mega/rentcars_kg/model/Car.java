@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_car")
@@ -26,8 +26,8 @@ public class Car {
     private Double engineCapacity;
     private Boolean isAvailable ;
     private Double fuelConsumption;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate mnfYear;
+    @JsonFormat(pattern = "YYYY")
+    private Date mnfYear;
     @Enumerated(value = EnumType.STRING)
     private CarModel carModel;
     @Enumerated(value = EnumType.STRING)

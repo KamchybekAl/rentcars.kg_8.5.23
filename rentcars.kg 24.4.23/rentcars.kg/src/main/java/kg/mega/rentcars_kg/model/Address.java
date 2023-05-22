@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tb_address")
@@ -21,4 +22,14 @@ public class Address {
     private String street;
     private String buildingNumber;
 
+    @OneToMany(mappedBy = "getAddress")
+    private Collection<OrderDetail> orderDetail;
+
+    public Collection<OrderDetail> getOrderDetail() {
+        return orderDetail;
+    }
+
+    public void setOrderDetail(Collection<OrderDetail> orderDetail) {
+        this.orderDetail = orderDetail;
+    }
 }

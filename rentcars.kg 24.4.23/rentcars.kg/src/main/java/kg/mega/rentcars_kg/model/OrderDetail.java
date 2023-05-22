@@ -1,6 +1,5 @@
 package kg.mega.rentcars_kg.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +26,7 @@ public class OrderDetail {
     private String clientEmail;
     private Double priceBeforeDiscount;
     private Double priceWithDiscount; // Total price
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTimeFrom;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dateTimeTo;
     private Long orderedDays;
 

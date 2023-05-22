@@ -12,25 +12,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddressController {
     private final AddressService addressService;
+
     @PostMapping("/save")
-    public AddressDTO saveAddress(@RequestBody AddressDTO addressDTO){
+    public AddressDTO saveAddress(@RequestBody AddressDTO addressDTO) {
         return addressService.saveAddress(addressDTO);
     }
+
     @GetMapping("/findById")
-    public AddressDTO findById (@RequestParam Long id){
+    public AddressDTO findById(@RequestParam Long id) {
         return addressService.findById(id);
     }
+
     @GetMapping("/findAll")
-    public List<AddressDTO>findAll(){
+    public List<AddressDTO> findAll() {
         return addressService.findAll();
     }
 
     @PutMapping("/update")
-    public AddressDTO updateAddress (@RequestBody AddressDTO addressDTO){
+    public AddressDTO updateAddress(@RequestBody AddressDTO addressDTO) {
         return addressService.updateAddress(addressDTO);
     }
+
     @DeleteMapping("/delete")
-    public void delete(@RequestParam Long id){
+    public void delete(@RequestParam Long id) {
         addressService.deleteAddress(id);
     }
 

@@ -49,7 +49,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     private Double calculatePriceWithDiscount(OrderDetail orderDetail, Double priceWithoutDiscount) {
         Discount discount = discountService.getActualDiscountByCarAndDaysCount(orderDetail.getCar(), findReservedDays(orderDetail));
-        if (findReservedDays(orderDetail) != null && findReservedDays(orderDetail) > 2) { // отправляет: Итоговая сумма с учётом Вашей скидки: null  ??
+        if (orderDetail.getOrderedDays() != null && orderDetail.getOrderedDays() > 2) { // отправляет: Итоговая сумма с учётом Вашей скидки: null  ??
             return priceWithoutDiscount - (priceWithoutDiscount * (discount.getDiscount() / 100));
         } else {
             return 0.0;
@@ -64,7 +64,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public OrderDetailDTO findById(Long id) {
-        return orderDetailMapper.toDto(orderDetailRepo.findById(id).get());
+        return orderDetailMapper.toDto(orderDetailRepo.findById(id).orElse(null));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public OrderDetailDTO updateOrderDetail(OrderDetailDTO orderDetailDTO) {
-        OrderDetail updateOrderDetail = orderDetailRepo.findById(orderDetailDTO.getId()).get();
+        OrderDetail updateOrderDetail = orderDetailRepo.findById(orderDetailDTO.getId()).orElse(null);
 //        венуть позже с OrderDetailServiceImpl 8.5.23 текст файл
         return orderDetailMapper.toDto(updateOrderDetail);
     }
@@ -83,15 +83,15 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Override
     public List<OrderCarDTO> findAllActive() {
 //        OrderCarDTO orderCarDTO = new OrderCarDTO();
-        List<OrderCarDTO>toArryList = new ArrayList<>();
-        for (OrderDetail or:orderDetailRepo.findAllActive(LocalDateTime.now())) {
-            toArryList.add(new OrderCarDTO(or.getDateTimeFrom().toLocalDate().datesUntil(or.getDateTimeTo().toLocalDate()).collect(Collectors.toList()),or.getCar()));
+        List<OrderCarDTO> toArryList = new ArrayList<>();
+        for (OrderDetail or : orderDetailRepo.findAllActive(LocalDateTime.now())) {
+            toArryList.add(new OrderCarDTO(or.getDateTimeFrom().toLocalDate().datesUntil(or.getDateTimeTo().toLocalDate()).collect(Collectors.toList()), or.getCar()));
         }
         return toArryList;
     }
 
     private Long findReservedDays(OrderDetail orderDetail) {
         Duration duration = Duration.between(orderDetail.getDateTimeFrom(), orderDetail.getDateTimeTo());
-        return duration.toDays() + 1;
+        return duration.toDays();
     }
 }

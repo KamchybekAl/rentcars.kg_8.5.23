@@ -1,6 +1,7 @@
 package kg.mega.rentcars_kg.controller;
 
 import kg.mega.rentcars_kg.model.Car;
+import kg.mega.rentcars_kg.model.dto.CarDTO;
 import kg.mega.rentcars_kg.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,9 @@ public class CarController {
         carService.deleteCar(id);
     }
 
+    @GetMapping("/getCarCategory")
+    public List<CarDTO> getCarCategory (@RequestParam String CarCategory){
+        return carService.getCarCategory(CarCategory);
+        }
 
 }

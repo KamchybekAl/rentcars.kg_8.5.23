@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public DiscountDTO saveDiscount(DiscountDTO discountDTO) {
         Discount discount = discountMapper.toEntity(discountDTO);
-        discount.setStartDate(LocalDateTime.now());
+        discount.setStartDate(LocalDate.now());
         discount.setEndDate(discount.getStartDate().plusYears(100));
         discount.setCar(carRepo.findById(discountDTO.getCar().getId()).get());
         Discount save = discountRepo.save(discount);
@@ -48,12 +48,6 @@ public class DiscountServiceImpl implements DiscountService {
         updateDiscount.setStartDate(discountDTO.getStartDate());
         updateDiscount.setEndDate(discountDTO.getEndDate());
         return discountMapper.toDto(updateDiscount);
-    }
-
-    @Override
-    public Discount findDiscountByCar(Car car) {
-
-        return discountRepo.findByCar(car).get();
     }
 
     @Override

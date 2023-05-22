@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_discount")
@@ -21,10 +21,10 @@ public class Discount {
     private Long id;
     private Double discount;
     private Long daysCountForDiscount;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss ")
-    private LocalDateTime startDate;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime endDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate endDate;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id")
     private Car car;

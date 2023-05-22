@@ -10,9 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -23,7 +24,7 @@ public class PriceServiceImpl implements PriceService {
     @Override
     public PriceDTO savePrice(PriceDTO priceDTO) {
         Price price = priceMapper.toEntity(priceDTO);
-        price.setStartDate(LocalDateTime.now());
+        price.setStartDate(LocalDate.now());
         price.setEndDate(price.getStartDate().plusYears(100));
         Price save = priceRepo.save(price);
         return priceMapper.toDto(save);

@@ -1,6 +1,7 @@
 package kg.mega.rentcars_kg.service;
 
 import kg.mega.rentcars_kg.model.Car;
+import kg.mega.rentcars_kg.model.dto.CarDTO;
 
 import java.util.List;
 
@@ -10,5 +11,7 @@ public interface CarService {
     List<Car> findAll();
     Car updateCar (Car car);
     void deleteCar(Long id);
+
+    List<CarDTO> getCarCategory(String CarCategory);
 
 }

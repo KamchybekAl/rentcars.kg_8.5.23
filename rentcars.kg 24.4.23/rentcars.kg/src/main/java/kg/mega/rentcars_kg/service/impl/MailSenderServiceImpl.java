@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +44,9 @@ public class MailSenderServiceImpl implements MailSenderService {
         }
         String message = " Вы забронировали автомобиль " + orderDetail.getCar().getCarModel() +
                 "\n планируемое время аренды машины:  " + orderDetail.getOrderedDays() + " дней " +
-                "\n начисленная сумма за авренду авто: " + orderDetail.getPriceBeforeDiscount() + messageDiscount;
+                "\n Дата начала аренды автомобиля: " + orderDetail.getDateTimeFrom().format(DateTimeFormatter.ofPattern("d MMM uuuu"))+
+                "\n Дата возрата аренды автомобиля: " + orderDetail.getDateTimeTo().format(DateTimeFormatter.ofPattern("d MMM uuuu"))+
+                "\n начисленная сумма за авренду авто: " + orderDetail.getPriceBeforeDiscount() + messageDiscount ;
         String subject = "Ваш заказ по аренде автомибиля";
         sendSimpleMessage(orderDetail.getClientEmail(), subject, message, orderDetail.getCar().getPhoto());
     }

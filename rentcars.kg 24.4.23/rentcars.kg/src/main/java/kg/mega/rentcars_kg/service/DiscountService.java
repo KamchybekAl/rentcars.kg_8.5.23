@@ -11,8 +11,6 @@ public interface DiscountService {
     DiscountDTO findById(Long id);
     List<DiscountDTO> findAll();
     DiscountDTO updateDiscount (DiscountDTO discountDTO);
-
-    Discount findDiscountByCar(Car car);
     Discount getActualDiscountByCarAndDaysCount(Car car,Long daysCount);
 
 }

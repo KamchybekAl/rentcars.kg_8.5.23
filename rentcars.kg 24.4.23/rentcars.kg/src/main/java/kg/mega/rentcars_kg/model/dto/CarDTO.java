@@ -6,7 +6,7 @@ import lombok.Data;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class CarDTO {
@@ -16,8 +16,8 @@ public class CarDTO {
     private Double engineCapacity;
     private Boolean isAvailable ;
     private Double fuelConsumption;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate mnfYear;
+    @JsonFormat(pattern = "YYYY")
+    private Date mnfYear;
     @Enumerated(value = EnumType.STRING)
     private CarModel carModel;
     @Enumerated(value = EnumType.STRING)
