@@ -24,7 +24,8 @@ public class Car {
     private String photo;
     private String description;
     private Double engineCapacity;
-    private Boolean isAvailable ;
+    @Column(name = "is_available")
+    private Boolean isAvailable;
     private Double fuelConsumption;
     @JsonFormat(pattern = "YYYY")
     private Date mnfYear;

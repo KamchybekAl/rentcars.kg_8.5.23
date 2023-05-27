@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
 @Service
 @RequiredArgsConstructor
 @Transactional

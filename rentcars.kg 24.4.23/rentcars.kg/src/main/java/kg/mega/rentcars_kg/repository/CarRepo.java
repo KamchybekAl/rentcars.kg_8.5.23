@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface CarRepo extends JpaRepository<Car, Long> {
     @Query(value = "select * from tb_car where car_category=:CarCategory", nativeQuery = true)
-    List<Car> getCarCategory( String CarCategory);
+    List<Car> getCarCategory(String CarCategory);
+    @Query(value = "select * from tb_car where is_available=true", nativeQuery = true)
+    List<Car>findByIsAvailableIsTrue(Boolean available);
 }

@@ -8,9 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface CarMapper {
-    CarDTO toDto(Car car);
-    Car toEntity(CarDTO carDTO);
-    List<CarDTO> toDTOList(List<Car>carList);
-    List<Car> toEntityList(List<CarDTO>carDTOList);
+//    CarDTO toDto(Car car);
+
+//    Car toEntity(CarDTO carDTO);
+
+    List<CarDTO> toDTOList(List<Car> carList);
+
+//    List<Car> toEntityList(List<CarDTO> carDTOList);
 
 }

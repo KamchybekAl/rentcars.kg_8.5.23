@@ -39,9 +39,10 @@ public class CarServiceImpl implements CarService {
         if (car.getCarModel() != null) {
 
             updateCar.setCarModel(car.getCarModel());
+            updateCar.setCarCategory(car.getCarCategory());
+            updateCar.setDescription(car.getDescription());
         }
-        updateCar.setCarCategory(car.getCarCategory());
-        updateCar.setDescription(car.getDescription());
+        updateCar.setIsAvailable(car.getIsAvailable());
 
         return updateCar;
     }
@@ -50,6 +51,11 @@ public class CarServiceImpl implements CarService {
     public void deleteCar(Long id) {
         Car deleteCar = carRepo.findById(id).get();
         carRepo.delete(deleteCar);
+    }
+
+    @Override
+    public List<Car> findAllAvailableCar(Boolean available) {
+        return carRepo.findByIsAvailableIsTrue(available);
     }
 
     @Override

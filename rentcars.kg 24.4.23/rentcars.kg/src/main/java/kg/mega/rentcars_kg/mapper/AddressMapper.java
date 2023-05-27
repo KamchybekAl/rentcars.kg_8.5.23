@@ -8,13 +8,12 @@ import java.util.List;
 
 @Mapper
 public interface AddressMapper {
-   // AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
     AddressDTO toDto(Address address);
 
     Address toEntity(AddressDTO addressDTO);
 
     List<AddressDTO> toDTOList(List<Address> addressList);
 
-    List<Address> toEntityList(List<AddressDTO> addressDTOList);
+//    List<Address> toEntityList(List<AddressDTO> addressDTOList);
 
 }

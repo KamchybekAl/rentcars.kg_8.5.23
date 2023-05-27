@@ -11,5 +11,5 @@ public interface OrderDetailMapper {
     OrderDetailDTO toDto(OrderDetail orderDetail);
     OrderDetail toEntity(OrderDetailDTO orderDetailDTO);
     List<OrderDetailDTO> toDTOList (List<OrderDetail>orderDetailList);
-    List<OrderDetail> toEntity(List<OrderDetailDTO>orderDetailDTOList);
+//    List<OrderDetail> toEntity(List<OrderDetailDTO>orderDetailDTOList);
 }

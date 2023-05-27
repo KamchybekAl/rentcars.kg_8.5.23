@@ -25,11 +25,4 @@ public class Address {
     @OneToMany(mappedBy = "getAddress")
     private Collection<OrderDetail> orderDetail;
 
-    public Collection<OrderDetail> getOrderDetail() {
-        return orderDetail;
-    }
-
-    public void setOrderDetail(Collection<OrderDetail> orderDetail) {
-        this.orderDetail = orderDetail;
-    }
 }

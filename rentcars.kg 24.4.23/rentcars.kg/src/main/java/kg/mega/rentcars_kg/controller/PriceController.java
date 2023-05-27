@@ -15,24 +15,24 @@ public class PriceController {
     private final PriceService priceService;
 
     @PostMapping("/save")
-    public PriceDTO savePrice(@RequestBody PriceDTO priceDTO){
+    public PriceDTO savePrice(@RequestBody PriceDTO priceDTO) {
         return priceService.savePrice(priceDTO);
     }
+
     @GetMapping("/findById")
-    public PriceDTO findById (@RequestParam Long id){
+    public PriceDTO findById(@RequestParam Long id) {
         return priceService.findById(id);
     }
+
     @GetMapping("/findAll")
-    public List<PriceDTO> findAll(){
+    public List<PriceDTO> findAll() {
         return priceService.findAll();
     }
 
     @PutMapping("/update")
-    public PriceDTO updatePrice (@RequestBody PriceDTO priceDTO){
+    public PriceDTO updatePrice(@RequestBody PriceDTO priceDTO) {
         return priceService.updatePrice(priceDTO);
     }
-
-
 
 
 }

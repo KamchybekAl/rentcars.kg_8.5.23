@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface OrderDetailRepo extends JpaRepository<OrderDetail,Long> {
-    @Query(value = "select * from tb_orderdetail where ?1 between date_time_from and date_time_to",nativeQuery = true)
+public interface OrderDetailRepo extends JpaRepository<OrderDetail, Long> {
+    @Query(value = "select * from tb_orderdetail where ?1 between date_time_from and date_time_to", nativeQuery = true)
     List<OrderDetail> findAllActive(LocalDateTime localDateTime);
 }

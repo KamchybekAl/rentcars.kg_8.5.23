@@ -32,13 +32,11 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "getAddress",referencedColumnName = "id")
-
     private Address getAddress;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "returnAddress",referencedColumnName = "id")
     private Address returnAddress;
     @ManyToOne(fetch = FetchType.EAGER)
-//    @LazyCollection(LazyCollectionOption.FALSE)
     private Car car;
 
 }

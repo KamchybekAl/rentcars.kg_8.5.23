@@ -11,6 +11,7 @@ public interface CarService {
     List<Car> findAll();
     Car updateCar (Car car);
     void deleteCar(Long id);
+    List<Car>findAllAvailableCar(Boolean available);
 
     List<CarDTO> getCarCategory(String CarCategory);
 

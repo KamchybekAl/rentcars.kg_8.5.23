@@ -82,7 +82,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public List<OrderCarDTO> findAllActive() {
-//        OrderCarDTO orderCarDTO = new OrderCarDTO();
         List<OrderCarDTO> toArryList = new ArrayList<>();
         for (OrderDetail or : orderDetailRepo.findAllActive(LocalDateTime.now())) {
             toArryList.add(new OrderCarDTO(or.getDateTimeFrom().toLocalDate().datesUntil(or.getDateTimeTo().toLocalDate()).collect(Collectors.toList()), or.getCar()));

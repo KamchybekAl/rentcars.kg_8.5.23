@@ -14,6 +14,6 @@ public interface DiscountMapper {
 
     List<DiscountDTO> toDTOList(List<Discount> discountList);
 
-    List<Discount> toEntityList(List<DiscountDTO> discountDTOList);
+//    List<Discount> toEntityList(List<DiscountDTO> discountDTOList);
 
 }

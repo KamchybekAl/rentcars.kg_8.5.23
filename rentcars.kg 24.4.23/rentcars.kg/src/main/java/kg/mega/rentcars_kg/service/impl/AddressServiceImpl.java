@@ -24,8 +24,9 @@ public class AddressServiceImpl implements AddressService {
         Address save = addressRepo.save(address);
         return addressMapper.toDto(save);
     }
+
     @Override
-    public AddressDTO findById(Long id){
+    public AddressDTO findById(Long id) {
         return addressMapper.toDto(addressRepo.findById(id).get());
     }
 

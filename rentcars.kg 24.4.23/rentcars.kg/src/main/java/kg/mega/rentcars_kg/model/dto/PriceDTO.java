@@ -5,6 +5,7 @@ import kg.mega.rentcars_kg.model.Car;
 import lombok.Data;
 
 import java.time.LocalDate;
+
 @Data
 public class PriceDTO {
     private Long id;
